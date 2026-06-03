@@ -1,0 +1,54 @@
+<section class="page-header">
+  <div>
+    <div class="eyebrow">Saved games</div>
+    <h1>History</h1>
+    <p class="muted">Review every game saved for your account.</p>
+  </div>
+  <button type="button" class="secondary-button" (click)="loadGames()" [disabled]="isLoading">
+    {{ isLoading ? 'Refreshing...' : 'Refresh' }}
+  </button>
+</section>
+
+@if (isLoading) {
+  <div class="panel">
+    <p class="muted">Loading games...</p>
+  </div>
+} @else if (errorMessage) {
+  <p class="message error">{{ errorMessage }}</p>
+} @else if (games.length === 0) {
+  <div class="panel empty-state">
+    <h2>No games yet</h2>
+    <p class="muted">Start a game from the Game page to build your history.</p>
+  </div>
+} @else {
+  <section class="table-card">
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Game Id</th>
+            <th>Attempts</th>
+            <th>Win/Loss</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (game of games; track game.gameId) {
+            <tr>
+              <td>{{ game.gameId }}</td>
+              <td>{{ game.attempts }}</td>
+              <td>
+                <span class="result-pill" [class.win]="game.result === 'Win'" [class.loss]="game.result === 'Loss'">
+                  {{ game.result }}
+                </span>
+              </td>
+              <td>{{ game.startDate }}</td>
+              <td>{{ game.endDate }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+}

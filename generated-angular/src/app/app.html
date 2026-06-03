@@ -1,0 +1,19 @@
+<header class="app-header">
+  <a class="brand" routerLink="/game" aria-label="Go to game page">
+    <span class="brand-mark">W</span>
+    <span>Wordle API</span>
+  </a>
+
+  @if (authService.isAuthenticated()) {
+    <nav class="nav-links" aria-label="Main navigation">
+      <a routerLink="/game" routerLinkActive="active">Game</a>
+      <a routerLink="/statistics" routerLinkActive="active">Statistics</a>
+      <a routerLink="/history" routerLinkActive="active">History</a>
+      <button type="button" class="logout-button" (click)="logout()">Logout</button>
+    </nav>
+  }
+</header>
+
+<main class="app-main">
+  <router-outlet />
+</main>
