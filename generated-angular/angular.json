@@ -39,9 +39,11 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular/build:application",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
             "browser": "src/main.ts",
+            "index": "src/index.html",
+            "outputPath": "dist/wordle-frontend",
             "tsConfig": "tsconfig.app.json",
             "assets": [
               {
@@ -78,7 +80,7 @@
           "defaultConfiguration": "production"
         },
         "serve": {
-          "builder": "@angular/build:dev-server",
+          "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
               "buildTarget": "wordle-frontend:build:production"
