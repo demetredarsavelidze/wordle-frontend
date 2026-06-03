@@ -1,0 +1,100 @@
+<section class="page-grid">
+  <div class="hero-card">
+    <div class="eyebrow">Wordle challenge</div>
+    <h1>Play a new game</h1>
+    <p class="muted">
+      Start a game, submit 5-letter guesses, and use the colors to narrow down the answer.
+    </p>
+
+    <button type="button" class="primary-button" (click)="startGame()" [disabled]="isStarting">
+      {{ isStarting ? 'Starting...' : 'Start Game' }}
+    </button>
+
+    @if (gameId) {
+      <p class="game-id">Current Game Id: <strong>{{ gameId }}</strong></p>
+    }
+  </div>
+
+  <div class="panel">
+    <h2>Submit guess</h2>
+    <form class="guess-form" (ngSubmit)="submitGuess()">
+      <label for="guess">5-letter guess</label>
+      <div class="guess-controls">
+        <input
+          id="guess"
+          name="guess"
+          maxlength="5"
+          minlength="5"
+          pattern="[A-Za-z]{5}"
+          [(ngModel)]="guess"
+          [disabled]="!gameId || isGameOver || isGuessing"
+          placeholder="crane"
+          autocomplete="off"
+        />
+        <button type="submit" class="secondary-button" [disabled]="!gameId || isGameOver || isGuessing">
+          {{ isGuessing ? 'Checking...' : 'Guess' }}
+        </button>
+      </div>
+    </form>
+
+    @if (errorMessage) {
+      <p class="message error">{{ errorMessage }}</p>
+    }
+
+    @if (infoMessage) {
+      <p class="message info">{{ infoMessage }}</p>
+    }
+
+    <div class="status-row" aria-label="Game status">
+      <div class="status-card">
+        <span>Attempt</span>
+        <strong>{{ currentAttempt?.attemptNumber ?? 0 }}</strong>
+      </div>
+      <div class="status-card">
+        <span>Win Status</span>
+        <strong>{{ isWin ? 'Win' : 'Not yet' }}</strong>
+      </div>
+      <div class="status-card">
+        <span>Game Over</span>
+        <strong>{{ isGameOver ? 'Yes' : 'No' }}</strong>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="attempts-card">
+  <div class="section-heading">
+    <div>
+      <div class="eyebrow">Guess results</div>
+      <h2>Attempts</h2>
+    </div>
+    <div class="legend" aria-label="Result legend">
+      <span><i class="legend-box correct"></i> Correct</span>
+      <span><i class="legend-box present"></i> Present</span>
+      <span><i class="legend-box absent"></i> Absent</span>
+    </div>
+  </div>
+
+  @if (attempts.length === 0) {
+    <p class="empty-state">No guesses yet. Start a game and submit your first word.</p>
+  } @else {
+    <div class="attempt-list">
+      @for (attempt of attempts; track attempt.attemptNumber) {
+        <article class="attempt-row">
+          <div class="attempt-meta">
+            <span>Attempt {{ attempt.attemptNumber }}</span>
+            <strong>{{ attempt.isWin ? 'Win' : attempt.isGameOver ? 'Game over' : 'In progress' }}</strong>
+          </div>
+
+          <div class="tiles">
+            @for (tile of attempt.results; track $index) {
+              <span class="tile" [class.correct]="tile.status === 'correct'" [class.present]="tile.status === 'present'" [class.absent]="tile.status === 'absent'">
+                {{ tile.letter }}
+              </span>
+            }
+          </div>
+        </article>
+      }
+    </div>
+  }
+</section>

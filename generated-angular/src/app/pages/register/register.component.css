@@ -1,0 +1,32 @@
+:host {
+  display: grid;
+  min-height: calc(100vh - 136px);
+  place-items: center;
+}
+
+.auth-card {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 1.5rem;
+  box-shadow: 0 24px 80px rgba(15, 23, 42, 0.12);
+  max-width: 440px;
+  padding: 2rem;
+  width: 100%;
+}
+
+.auth-form {
+  display: grid;
+  gap: 0.85rem;
+  margin-top: 1.5rem;
+}
+
+.auth-switch {
+  color: #64748b;
+  margin: 1.5rem 0 0;
+  text-align: center;
+}
+
+.auth-switch a {
+  color: #15803d;
+  font-weight: 800;
+}

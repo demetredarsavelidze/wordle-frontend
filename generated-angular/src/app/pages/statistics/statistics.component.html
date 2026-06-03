@@ -1,0 +1,41 @@
+<section class="page-header">
+  <div>
+    <div class="eyebrow">Player dashboard</div>
+    <h1>Statistics</h1>
+    <p class="muted">Your saved Wordle performance from the authenticated API.</p>
+  </div>
+  <button type="button" class="secondary-button" (click)="loadStatistics()" [disabled]="isLoading">
+    {{ isLoading ? 'Refreshing...' : 'Refresh' }}
+  </button>
+</section>
+
+@if (isLoading) {
+  <div class="panel">
+    <p class="muted">Loading statistics...</p>
+  </div>
+} @else if (errorMessage) {
+  <p class="message error">{{ errorMessage }}</p>
+} @else if (statistics) {
+  <section class="stats-grid">
+    <article class="stat-card">
+      <span>Games Played</span>
+      <strong>{{ statistics.gamesPlayed }}</strong>
+    </article>
+    <article class="stat-card">
+      <span>Wins</span>
+      <strong>{{ statistics.wins }}</strong>
+    </article>
+    <article class="stat-card">
+      <span>Current Streak</span>
+      <strong>{{ statistics.currentStreak }}</strong>
+    </article>
+    <article class="stat-card">
+      <span>Max Streak</span>
+      <strong>{{ statistics.maxStreak }}</strong>
+    </article>
+    <article class="stat-card highlight">
+      <span>Total Points</span>
+      <strong>{{ statistics.totalPoints }}</strong>
+    </article>
+  </section>
+}
